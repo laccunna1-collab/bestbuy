@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Buy Rewards | Modern</title>
+    <style>
+        :root {
+            --bg-primary: #FFFFFF;
+            --bg-surface: #F8FAFC;
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+            --brand-teal: #0284C7;
+            --accent-yellow: #FFE600;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 5%;
+            background-color: var(--bg-primary);
+            border-bottom: 2px solid var(--bg-surface);
+        }
+
+        .logo {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .logo-tag {
+            background-color: var(--accent-yellow);
+            color: var(--text-main);
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--brand-teal);
+        }
+
+        .btn-primary {
+            background-color: var(--brand-teal);
+            color: #FFFFFF !important;
+            padding: 0.6rem 1.4rem;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none;
+            border: 2px solid var(--accent-yellow);
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+        }
+
+        header {
+            padding: 6rem 5% 4rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background-color: rgba(2, 132, 199, 0.1);
+            color: var(--brand-teal);
+            border: 1px solid rgba(2, 132, 199, 0.2);
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        header h1 {
+            font-size: 3.25rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 1.25rem;
+            line-height: 1.15;
+            color: var(--text-main);
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.125rem;
+            margin-bottom: 2.5rem;
+        }
+
+        section {
+            padding: 3rem 5% 6rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            padding: 2rem;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            background: var(--bg-primary);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--brand-teal);
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: var(--brand-teal);
+        }
+
+        .step-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--brand-teal);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .toast-notification {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background-color: var(--text-main);
+            color: #FFFFFF;
+            padding: 0.85rem 1.25rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-yellow);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.875rem;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none;
+        }
+
+        .toast-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast-icon {
+            background-color: var(--brand-teal);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px var(--brand-teal);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.25rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .toast-notification {
+                bottom: 15px;
+                left: 50%;
+                transform: translateX(-50%) translateY(20px);
+                width: 92%;
+                justify-content: center;
+            }
+
+            .toast-notification.show {
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo">
+            Best Buy <span class="logo-tag">REWARDS</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="#">Deals</a>
+            <a href="#">How it Works</a>
+            <a href="#">Sign In</a>
+            <a href="#" class="btn-primary">Claim Offer</a>
+        </div>
+    </nav>
+
+    <header>
+        <div class="hero-badge">Official Member Perks</div>
+        <h1>Tech rewards made simple.</h1>
+        <p>
+            Earn points on your daily purchases, unlock exclusive store vouchers,
+            and redeem gift perks instantly.
+        </p>
+
+        <div>
+            <a href="#" class="btn-primary" style="padding: 0.85rem 2rem; font-size: 1rem;">
+                Get Started Now
+            </a>
+        </div>
+    </header>
+
+    <section>
+        <div class="grid">
+            <div class="card">
+                <span class="step-tag">Step 01</span>
+                <h3>Create Account</h3>
+                <p>Register your account in under a minute to start unlocking member benefits.</p>
+            </div>
+
+            <div class="card">
+                <span class="step-tag">Step 02</span>
+                <h3>Earn Activity Points</h3>
+                <p>Complete simple tasks or shop your favorite tech items to accumulate points fast.</p>
+            </div>
+
+            <div class="card">
+                <span class="step-tag">Step 03</span>
+                <h3>Redeem Rewards</h3>
+                <p>Exchange your earned points for direct store certificates and promotional codes.</p>
+            </div>
+        </div>
+    </section>
+
+    <div id="rewardTicker" class="toast-notification">
+        <span class="toast-icon"></span>
+        <span id="tickerText">User just unlocked a reward!</span>
+    </div>
+
+    <script>
+        const activityList = [
+            "Marcus T. just claimed a $50 reward code!",
+            "Jessica K. earned 1,200 reward points!",
+            "David R. redeemed a tech gift certificate!",
+            "Elena M. just joined the Member Tier!",
+            "Chris P. claimed a store discount code!"
+        ];
+
+        const tickerElement = document.getElementById("rewardTicker");
+        const tickerText = document.getElementById("tickerText");
+
+        function triggerNotification() {
+            const randomEntry =
+                activityList[Math.floor(Math.random() * activityList.length)];
+
+            tickerText.textContent = randomEntry;
+            tickerElement.classList.add("show");
+
+            setTimeout(() => {
+                tickerElement.classList.remove("show");
+            }, 3500);
+        }
+
+        setTimeout(triggerNotification, 1500);
+        setInterval(triggerNotification, 7000);
+    </script>
+
+</body>
+</html>
